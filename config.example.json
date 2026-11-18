@@ -1,0 +1,26 @@
+{
+  "window_hours": 5,
+  "buffer_minutes": 2,
+  "retry_minutes": 10,
+  "quiet_hours": [],
+  "notify_on_failure": true,
+  "ping_timeout_seconds": 180,
+  "providers": {
+    "claude": {
+      "enabled": true,
+      "command": ["claude", "-p", "{prompt}", "--model", "haiku"],
+      "prompt": "Reply with just: ok",
+      "log_globs": ["~/.claude/projects/**/*.jsonl"],
+      "activity_types": ["user", "assistant"],
+      "floor_window_start_to_hour": false
+    },
+    "codex": {
+      "enabled": true,
+      "command": ["codex", "exec", "--skip-git-repo-check", "{prompt}"],
+      "prompt": "Reply with just: ok",
+      "log_globs": ["~/.codex/sessions/**/*.jsonl"],
+      "activity_types": [],
+      "floor_window_start_to_hour": false
+    }
+  }
+}

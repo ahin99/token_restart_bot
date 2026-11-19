@@ -10,14 +10,14 @@
   <img src="https://img.shields.io/github/stars/ahin99/token_restart_bot?style=social" alt="GitHub stars" />
 </p>
 
-<h3>⏳ 자는 동안에도 리셋 타이머를 돌려 두는 봇</h3>
-<p>윈도우가 끝나면 짧은 메시지를 보내 다음 5시간을 바로 시작합니다.</p>
+<h3>⏳ A bot that keeps a reset timer running even while you sleep</h3>
+<p>When the window closes, it sends a short message to start the next five hours immediately.</p>
 
 <a href="#단계별-실행-안내-처음부터-끝까지">
-  <img src="https://img.shields.io/badge/🚀_시작하기-7c3aed?style=for-the-badge" alt="시작하기" />
+  <img src="https://img.shields.io/badge/🚀_start-7c3aed?style=for-the-badge" alt="시작하기" />
 </a>
 <a href="#작업-시간에-맞추기-핑-금지-시간">
-  <img src="https://img.shields.io/badge/⏰_시간_맞추기-06b6d4?style=for-the-badge" alt="시간 맞추기" />
+  <img src="https://img.shields.io/badge/⏰_set_timer-06b6d4?style=for-the-badge" alt="시간 맞추기" />
 </a>
 
 <br/><br/>

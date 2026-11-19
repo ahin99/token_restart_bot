@@ -1,3 +1,33 @@
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7c3aed,100:06b6d4&height=200&section=header&text=tokenbot&fontSize=64&fontColor=ffffff&desc=5시간%20사용량%20윈도우를%20끊김%20없이&descAlignY=70" width="100%" alt="tokenbot banner" />
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white" alt="Python 3.9+" />
+  <img src="https://img.shields.io/badge/macOS-launchd-000000?logo=apple&logoColor=white" alt="macOS launchd" />
+  <img src="https://img.shields.io/badge/Claude%20Code-supported-D97757?logo=anthropic&logoColor=white" alt="Claude Code supported" />
+  <img src="https://img.shields.io/badge/Codex-supported-412991?logo=openai&logoColor=white" alt="Codex supported" />
+  <img src="https://img.shields.io/github/stars/ahin99/token_restart_bot?style=social" alt="GitHub stars" />
+</p>
+
+<h3>⏳ 자는 동안에도 리셋 타이머를 돌려 두는 봇</h3>
+<p>윈도우가 끝나면 짧은 메시지를 보내 다음 5시간을 바로 시작합니다.</p>
+
+<a href="#단계별-실행-안내-처음부터-끝까지">
+  <img src="https://img.shields.io/badge/🚀_시작하기-7c3aed?style=for-the-badge" alt="시작하기" />
+</a>
+<a href="#작업-시간에-맞추기-핑-금지-시간">
+  <img src="https://img.shields.io/badge/⏰_시간_맞추기-06b6d4?style=for-the-badge" alt="시간 맞추기" />
+</a>
+
+<br/><br/>
+
+<!-- 데모 GIF: `vhs demo.tape` 로 assets/demo.gif 를 만든 뒤 아래 줄의 주석을 풀어 주세요.
+<img src="assets/demo.gif" width="720" alt="tokenbot demo" />
+-->
+
+</div>
+
 # tokenbot — 5시간 사용량 윈도우 자동 갱신 봇
 
 Claude Code와 Codex의 5시간 사용량 윈도우는 **5시간이 지나면 자동으로 다시 시작되지 않습니다.**
@@ -8,6 +38,7 @@ tokenbot은 항상 켜 둔 Mac mini에서 1분마다 상태를 확인합니다.
 **윈도우가 끝나면 바로 짧은 메시지("Reply with just: ok")를 보내서** 다음 윈도우를 시작시킵니다.
 자기 전에 아무 채팅이나 쳐 두는 걸 자동으로 해 주는 프로그램입니다.
 
+> [!WARNING]
 > ⚠️ 주간 한도는 늘지 않습니다. 리셋이 **더 빨리, 끊김 없이** 오게 할 뿐입니다.
 
 ---
@@ -86,6 +117,7 @@ Codex를 쓰지 않는다면 `config.json`에서 `"codex"`의 `"enabled"`를 `fa
 
 ### 5단계. 테스트 핑 한 번 보내기
 
+> [!WARNING]
 > 이 명령은 **실제 메시지를 보내므로 지금부터 5시간 윈도우가 시작됩니다.**
 > 사용량이 아깝다면 01:00 직전처럼 어차피 곧 핑이 멈추는 시간에 해도 됩니다.
 
@@ -161,6 +193,18 @@ python3 tokenbot.py uninstall
 
 ## 동작 방식
 
+```mermaid
+flowchart LR
+    A([⏱ launchd<br/>1분마다]) --> B[tokenbot tick]
+    B --> C[로컬 로그에서<br/>최근 사용 시각 수집]
+    C --> D{활성 윈도우가<br/>있나?}
+    D -- 있음 --> E([대기])
+    D -- 없음 --> F{핑 금지<br/>시간인가?}
+    F -- 예 --> E
+    F -- 아니오 --> G[짧은 메시지 전송<br/>claude / codex]
+    G --> H([새 5시간 윈도우 시작 ✅])
+```
+
 ```
 launchd (1분마다)
    └─ tokenbot.py tick
@@ -218,6 +262,7 @@ codex exec --skip-git-repo-check "Reply with just: ok"
 
 로그인이 안 되어 있다면 Mac mini에서 `claude`와 `codex`를 한 번씩 실행해 로그인하세요.
 
+> [!IMPORTANT]
 > **처음 한 번은 꼭 확인하세요.** 위 명령을 실행한 뒤
 > [claude.ai/settings/usage](https://claude.ai/settings/usage)와 Codex 사용량 화면에서
 > 5시간 윈도우가 실제로 시작됐는지 확인합니다. 아주 짧은 핑으로도 윈도우가 시작되는지 확인하는 단계입니다.
@@ -278,6 +323,7 @@ sudo pmset -a sleep 0
 sudo pmset -a autorestart 1
 ```
 
+> [!IMPORTANT]
 > **FileVault를 켜 두면 자동 로그인을 쓸 수 없습니다.** 정전 후 재부팅되면 누군가 비밀번호를 입력해야 봇이 다시 돕니다.
 > 보안과 편의 중 무엇을 고를지 직접 판단하세요. 화면은 꺼져도 되고, 잠금 화면 상태여도 로그인 세션만 살아 있으면 동작합니다.
 
